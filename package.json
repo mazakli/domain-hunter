@@ -1,7 +1,7 @@
 {
   "name": "semrush-proxy",
   "version": "1.0.0",
-  "description": "Semrush API Proxy - CORS cozumu",
+  "description": "Semrush API Proxy + Nobetci Eczane",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
@@ -12,6 +12,7 @@
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
+    "ejs": "^3.1.9",
     "express": "^4.18.2",
     "express-rate-limit": "^6.7.0",
     "node-fetch": "^2.6.9"
