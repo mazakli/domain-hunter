@@ -319,9 +319,8 @@ app.get('/:keyfile([a-f0-9]{8,64}\.txt)', function (req, res) {
 // Tüm il URL'lerini IndexNow'a gönder — ?key=INDEXNOW_KEY ile korunur
 app.get('/api/indexnow/submit-core', async function (req, res) {
   var indexNowKey = (process.env.INDEXNOW_KEY || '').trim();
-  if (!indexNowKey || (req.query.key || '') !== indexNowKey) {
-    return res.status(403).json({ error: 'Yetkisiz' });
-  }
+  if (!indexNowKey) return res.status(500).json({ error: 'INDEXNOW_KEY env var eksik' });
+  if ((req.query.key || '') !== indexNowKey) return res.status(403).json({ error: 'Gecersiz anahtar' });
 
   var base = 'https://www.724eczane.com';
   var iller3 = require('./data/iller');
