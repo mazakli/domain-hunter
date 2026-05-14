@@ -246,6 +246,8 @@ async function googleAccessToken() {
   var pay  = b64url(JSON.stringify({ iss: email, scope: 'https://www.googleapis.com/auth/indexing', aud: 'https://oauth2.googleapis.com/token', exp: now + 3600, iat: now }));
   var sign = crypto.createSign('RSA-SHA256');
   sign.update(hdr + '.' + pay);
+  var sign = crypto.createSign('RSA-SHA256');
+  sign.update(hdr + '.' + pay);
   var sig = sign.sign(key, 'base64').replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
   var jwt = hdr + '.' + pay + '.' + sig;
   var r = await fetch('https://oauth2.googleapis.com/token', {
@@ -450,7 +452,17 @@ app.get('/cerez-politikasi', function (req, res) {
   res.render('cerez-politikasi', { title: 'Çerez Politikası | 724eczane.com', description: '724eczane.com çerez politikası. Sitede kullanılan çerezler ve kişisel veri işleme hakkında bilgi edinin.' });
 });
 
-app.get('/health',    function (req, res) { res.json({ status: 'ok', time: new Date().toISOString() }); });
+app.get('/health', function (req, res) {
+  res.json({
+    status: 'ok',
+    time: new Date().toISOString(),
+    envVars: {
+      NOSYAPI_KEY:  process.env.NOSYAPI_KEY  ? 'VAR (' + process.env.NOSYAPI_KEY.length  + ' karakter)' : 'YOK',
+      INDEXNOW_KEY: process.env.INDEXNOW_KEY ? 'VAR (' + process.env.INDEXNOW_KEY.length + ' karakter)' : 'YOK'
+    }
+  });
+});
+
 app.get('/debug-env', function (req, res) {
   var adminKey = process.env.ADMIN_KEY || '';
   if (!adminKey || (req.query.key || '') !== adminKey) return res.status(404).send('Not found');
