@@ -309,9 +309,7 @@ app.get('/api/indexing/submit-core', async function (req, res) {
 var INDEXNOW_KEY = (process.env.INDEXNOW_KEY || '91cec650afe934b2933b74fc702cc0ba').trim();
 
 // Anahtar doğrulama dosyası: GET /{INDEXNOW_KEY}.txt
-app.get('/:keyfile([a-f0-9]{8,64}\\.txt)', function (req, res) {
-  var requested = req.params.keyfile.replace(/\.txt$/, '');
-  if (requested !== INDEXNOW_KEY) return res.status(404).send('Not found');
+app.get('/' + INDEXNOW_KEY + '.txt', function (req, res) {
   res.set('Content-Type', 'text/plain; charset=utf-8');
   res.send(INDEXNOW_KEY);
 });
