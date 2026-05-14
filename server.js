@@ -316,13 +316,12 @@ app.get('/:keyfile([a-f0-9]{8,64}\.txt)', function (req, res) {
   res.send(key);
 });
 
-// Tüm il URL'lerini IndexNow'a gönder — ?key=ADMIN_KEY ile korunur
+// Tüm il URL'lerini IndexNow'a gönder — ?key=INDEXNOW_KEY ile korunur
 app.get('/api/indexnow/submit-core', async function (req, res) {
-  if ((req.query.key || '') !== (process.env.ADMIN_KEY || '')) {
+  var indexNowKey = (process.env.INDEXNOW_KEY || '').trim();
+  if (!indexNowKey || (req.query.key || '') !== indexNowKey) {
     return res.status(403).json({ error: 'Yetkisiz' });
   }
-  var indexNowKey = (process.env.INDEXNOW_KEY || '').trim();
-  if (!indexNowKey) return res.status(500).json({ error: 'INDEXNOW_KEY env var eksik' });
 
   var base = 'https://www.724eczane.com';
   var iller3 = require('./data/iller');
