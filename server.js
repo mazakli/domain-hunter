@@ -305,6 +305,57 @@ app.get('/api/indexing/submit-core', async function (req, res) {
   res.json({ submitted: results.length, results: results });
 });
 
+// ── IndexNow ─────────────────────────────────────────────────────────────
+// Anahtar doğrulama dosyası: GET /{INDEXNOW_KEY}.txt
+app.get('/:keyfile([a-f0-9]{8,64}\\.txt)', function (req, res) {
+  var key = (process.env.INDEXNOW_KEY || '').trim();
+  if (!key) return res.status(404).send('Not found');
+  var requested = req.params.keyfile.replace(/\.txt$/, '');
+  if (requested !== key) return res.status(404).send('Not found');
+  res.set('Content-Type', 'text/plain; charset=utf-8');
+  res.send(key);
+});
+
+// Tüm il URL'lerini IndexNow'a gönder — ?key=ADMIN_KEY ile korunur
+app.get('/api/indexnow/submit-core', async function (req, res) {
+  if ((req.query.key || '') !== (process.env.ADMIN_KEY || '')) {
+    return res.status(403).json({ error: 'Yetkisiz' });
+  }
+  var indexNowKey = (process.env.INDEXNOW_KEY || '').trim();
+  if (!indexNowKey) return res.status(500).json({ error: 'INDEXNOW_KEY env var eksik' });
+
+  var base = 'https://www.724eczane.com';
+  var iller3 = require('./data/iller');
+  var urls = ['/', '/eczane-ekle', '/sitene-ekle', '/iletisim'].map(function (p) { return base + p; });
+  iller3.forEach(function (il) {
+    urls.push(base + '/nobetci-' + il.slug);
+    il.districts.forEach(function (d) {
+      urls.push(base + '/nobetci-' + il.slug + '-' + d.slug);
+    });
+  });
+
+  var payload = {
+    host:        'www.724eczane.com',
+    key:         indexNowKey,
+    keyLocation: base + '/' + indexNowKey + '.txt',
+    urlList:     urls
+  };
+
+  try {
+    var r = await fetch('https://api.indexnow.org/indexnow', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json; charset=utf-8' },
+      body:    JSON.stringify(payload)
+    });
+    var text = await r.text();
+    console.log('[indexnow] ' + r.status + ' — ' + urls.length + ' URL gönderildi');
+    res.json({ status: r.status, urlCount: urls.length, response: text });
+  } catch (err) {
+    console.error('[indexnow] ' + err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // ── Eczane başvurusu kaydet (Railway loglarına düşer) ───────────────────
 app.post('/api/eczane-ekle', function (req, res) {
   var d = req.body || {};
