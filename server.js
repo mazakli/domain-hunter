@@ -450,7 +450,16 @@ app.get('/cerez-politikasi', function (req, res) {
   res.render('cerez-politikasi', { title: 'Çerez Politikası | 724eczane.com', description: '724eczane.com çerez politikası. Sitede kullanılan çerezler ve kişisel veri işleme hakkında bilgi edinin.' });
 });
 
-app.get('/health',    function (req, res) { res.json({ status: 'ok', time: new Date().toISOString() }); });
+app.get('/health', function (req, res) {
+  res.json({
+    status: 'ok',
+    time: new Date().toISOString(),
+    envVars: {
+      NOSYAPI_KEY:  process.env.NOSYAPI_KEY  ? 'VAR (' + process.env.NOSYAPI_KEY.length  + ' karakter)' : 'YOK',
+      INDEXNOW_KEY: process.env.INDEXNOW_KEY ? 'VAR (' + process.env.INDEXNOW_KEY.length + ' karakter)' : 'YOK'
+    }
+  });
+});
 app.get('/debug-env', function (req, res) {
   var adminKey = process.env.ADMIN_KEY || '';
   if (!adminKey || (req.query.key || '') !== adminKey) return res.status(404).send('Not found');
