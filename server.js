@@ -246,8 +246,6 @@ async function googleAccessToken() {
   var pay  = b64url(JSON.stringify({ iss: email, scope: 'https://www.googleapis.com/auth/indexing', aud: 'https://oauth2.googleapis.com/token', exp: now + 3600, iat: now }));
   var sign = crypto.createSign('RSA-SHA256');
   sign.update(hdr + '.' + pay);
-  var sign = crypto.createSign('RSA-SHA256');
-  sign.update(hdr + '.' + pay);
   var sig = sign.sign(key, 'base64').replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
   var jwt = hdr + '.' + pay + '.' + sig;
   var r = await fetch('https://oauth2.googleapis.com/token', {
@@ -308,21 +306,19 @@ app.get('/api/indexing/submit-core', async function (req, res) {
 });
 
 // ── IndexNow ─────────────────────────────────────────────────────────────
+var INDEXNOW_KEY = (process.env.INDEXNOW_KEY || '91cec650afe934b2933b74fc702cc0ba').trim();
+
 // Anahtar doğrulama dosyası: GET /{INDEXNOW_KEY}.txt
 app.get('/:keyfile([a-f0-9]{8,64}\.txt)', function (req, res) {
-  var key = (process.env.INDEXNOW_KEY || '').trim();
-  if (!key) return res.status(404).send('Not found');
   var requested = req.params.keyfile.replace(/\.txt$/, '');
-  if (requested !== key) return res.status(404).send('Not found');
+  if (requested !== INDEXNOW_KEY) return res.status(404).send('Not found');
   res.set('Content-Type', 'text/plain; charset=utf-8');
-  res.send(key);
+  res.send(INDEXNOW_KEY);
 });
 
 // Tüm il URL'lerini IndexNow'a gönder — ?key=INDEXNOW_KEY ile korunur
 app.get('/api/indexnow/submit-core', async function (req, res) {
-  var indexNowKey = (process.env.INDEXNOW_KEY || '').trim();
-  if (!indexNowKey) return res.status(500).json({ error: 'INDEXNOW_KEY env var eksik' });
-  if ((req.query.key || '') !== indexNowKey) return res.status(403).json({ error: 'Gecersiz anahtar' });
+  if ((req.query.key || '') !== INDEXNOW_KEY) return res.status(403).json({ error: 'Gecersiz anahtar' });
 
   var base = 'https://www.724eczane.com';
   var iller3 = require('./data/iller');
@@ -336,8 +332,8 @@ app.get('/api/indexnow/submit-core', async function (req, res) {
 
   var payload = {
     host:        'www.724eczane.com',
-    key:         indexNowKey,
-    keyLocation: base + '/' + indexNowKey + '.txt',
+    key:         INDEXNOW_KEY,
+    keyLocation: base + '/' + INDEXNOW_KEY + '.txt',
     urlList:     urls
   };
 
