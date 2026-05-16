@@ -83,13 +83,15 @@ function nosyHeaders(apiKey) {
 
 function parseRow(p) {
   return {
-    name:     p.pharmacyName || '',
-    dist:     p.district     || '',
-    address:  p.address      || '',
-    phone:    p.phone        || '',
-    lat:      p.latitude     || '',
-    lng:      p.longitude    || '',
-    distSlug: toSlug(p.district || '')
+    name:       p.pharmacyName  || '',
+    dist:       p.district      || '',
+    address:    p.address       || '',
+    phone:      p.phone         || '',
+    lat:        p.latitude      || '',
+    lng:        p.longitude     || '',
+    distSlug:   toSlug(p.district || ''),
+    dutyStart:  p.pharmacyDutyStart || '',
+    dutyEnd:    p.pharmacyDutyEnd   || ''
   };
 }
 
@@ -168,10 +170,10 @@ function getDateInfo() {
 }
 
 var demoPharmacies = [
-  { name:'MERKEZ ECZANESİ',  dist:'MERKEZ', address:'Atatürk Cad. No:15',            phone:'0312 555 11 22', lat:'', lng:'' },
-  { name:'SAĞLIK ECZANESİ', dist:'MERKEZ', address:'Cumhuriyet Mah. 123 Sok. No:5', phone:'0312 555 33 44', lat:'', lng:'' },
-  { name:'GÜVEN ECZANESİ',  dist:'MERKEZ', address:'İstiklal Cad. No:42',           phone:'0312 555 55 66', lat:'', lng:'' },
-  { name:'HAYAT ECZANESİ',  dist:'MERKEZ', address:'Yıldız Mah. Gül Sok. No:3',     phone:'0312 555 77 88', lat:'', lng:'' }
+  { name:'MERKEZ ECZANESİ',  dist:'MERKEZ', address:'Atatürk Cad. No:15',            phone:'0312 555 11 22', lat:'', lng:'', dutyStart:'', dutyEnd:'' },
+  { name:'SAĞLIK ECZANESİ', dist:'MERKEZ', address:'Cumhuriyet Mah. 123 Sok. No:5', phone:'0312 555 33 44', lat:'', lng:'', dutyStart:'', dutyEnd:'' },
+  { name:'GÜVEN ECZANESİ',  dist:'MERKEZ', address:'İstiklal Cad. No:42',           phone:'0312 555 55 66', lat:'', lng:'', dutyStart:'', dutyEnd:'' },
+  { name:'HAYAT ECZANESİ',  dist:'MERKEZ', address:'Yıldız Mah. Gül Sok. No:3',     phone:'0312 555 77 88', lat:'', lng:'', dutyStart:'', dutyEnd:'' }
 ];
 
 app.get('/api/eczaneler', rateLimit(30), async function (req, res) {

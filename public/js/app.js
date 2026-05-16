@@ -44,6 +44,7 @@
       var addressHtml = '';
       if (p.dist) addressHtml += '<div class="text-muted small mb-1"><i class="fa-solid fa-map-pin me-1"></i>' + esc(p.dist) + '</div>';
       addressHtml += '<div>' + esc(p.address || '—') + '</div>';
+      if (p.dutyEnd) addressHtml += '<div class="mt-1"><span class="badge bg-warning text-dark" style="font-size:0.75rem"><i class="fa-solid fa-clock me-1"></i>' + esc(p.dutyEnd) + '\'a kadar açık</span></div>';
 
       var nameHtml = esc(p.name);
       if (window.PAGE_ILSLUG && p.distSlug) {
@@ -231,9 +232,9 @@
         var isSafari  = /Safari/.test(ua) && !/Chrome/.test(ua);
         var hint = '';
         if (err.code === 1) {
-          if (isChrome)       hint = ' Chrome: adres çubuğundaki kilit simgesi → Konum → İzin ver → Sayfayı yenile.';
-          else if (isEdge)    hint = ' Edge: adres çubuğundaki kilit → Konum → İzin ver → Sayfayı yenile.';
-          else if (isFirefox) hint = ' Firefox: adres çubuğundaki kilide tıklayın → Konum izni verin → Sayfayı yenile.';
+          if (isChrome)       hint = ' Chrome: adres çubağındaki kilit simgesi → Konum → İzin ver → Sayfayı yenile.';
+          else if (isEdge)    hint = ' Edge: adres çubağındaki kilit → Konum → İzin ver → Sayfayı yenile.';
+          else if (isFirefox) hint = ' Firefox: adres çubağındaki kilide tıklayın → Konum izni verin → Sayfayı yenile.';
           else if (isSafari)  hint = ' Safari: Tercihler → Web Siteleri → Konum → Bu site için "İzin Ver".';
           else                hint = ' Tarayıcı ayarlarından bu site için konum iznini etkinleştirin.';
           resultEl.innerHTML = '<i class="fa-solid fa-location-slash me-1 text-warning"></i>Konum izni reddedildi.' + hint;
