@@ -170,10 +170,10 @@ function getDateInfo() {
 }
 
 var demoPharmacies = [
-  { name:'MERKEZ ECZANESİ',  dist:'MERKEZ', address:'Atatürk Cad. No:15',            phone:'0312 555 11 22', lat:'', lng:'', dutyStart:'', dutyEnd:'' },
-  { name:'SAĞLIK ECZANESİ', dist:'MERKEZ', address:'Cumhuriyet Mah. 123 Sok. No:5', phone:'0312 555 33 44', lat:'', lng:'', dutyStart:'', dutyEnd:'' },
-  { name:'GÜVEN ECZANESİ',  dist:'MERKEZ', address:'İstiklal Cad. No:42',           phone:'0312 555 55 66', lat:'', lng:'', dutyStart:'', dutyEnd:'' },
-  { name:'HAYAT ECZANESİ',  dist:'MERKEZ', address:'Yıldız Mah. Gül Sok. No:3',     phone:'0312 555 77 88', lat:'', lng:'', dutyStart:'', dutyEnd:'' }
+  { name:'MERKEZ ECZANESİ',  dist:'MERKEZ', address:'Atatürk Cad. No:15',            phone:'0312 555 11 22', lat:'', lng:'' },
+  { name:'SAĞLIK ECZANESİ', dist:'MERKEZ', address:'Cumhuriyet Mah. 123 Sok. No:5', phone:'0312 555 33 44', lat:'', lng:'' },
+  { name:'GÜVEN ECZANESİ',  dist:'MERKEZ', address:'İstiklal Cad. No:42',           phone:'0312 555 55 66', lat:'', lng:'' },
+  { name:'HAYAT ECZANESİ',  dist:'MERKEZ', address:'Yıldız Mah. Gül Sok. No:3',     phone:'0312 555 77 88', lat:'', lng:'' }
 ];
 
 app.get('/api/eczaneler', rateLimit(30), async function (req, res) {
@@ -445,7 +445,8 @@ app.get('/kullanim-kosullari', function (req, res) {
 });
 
 app.get('/cerez-politikasi', function (req, res) {
-  res.render('cerez-politikasi', { title: 'Çerez Politikası | 724eczane.com', description: '724eczane.com çerez politikası. Sitede kullanılan çerezler ve kişisel veri işleme hakkında bilgi edinin.' });
+  var iller = require('./data/iller');
+  res.render('cerez-politikasi', { title: 'Çerez Politikası | 724eczane.com', description: '724eczane.com çerez politikası. Sitede kullanılan çerezler ve kişisel veri işleme hakkında bilgi edinin.', iller: iller });
 });
 
 app.get('/health', function (req, res) {
@@ -458,7 +459,6 @@ app.get('/health', function (req, res) {
     }
   });
 });
-
 app.get('/debug-env', function (req, res) {
   var adminKey = process.env.ADMIN_KEY || '';
   if (!adminKey || (req.query.key || '') !== adminKey) return res.status(404).send('Not found');
