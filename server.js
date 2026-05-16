@@ -445,7 +445,8 @@ app.get('/kullanim-kosullari', function (req, res) {
 });
 
 app.get('/cerez-politikasi', function (req, res) {
-  res.render('cerez-politikasi', { title: 'Çerez Politikası | 724eczane.com', description: '724eczane.com çerez politikası. Sitede kullanılan çerezler ve kişisel veri işleme hakkında bilgi edinin.' });
+  var iller = require('./data/iller');
+  res.render('cerez-politikasi', { title: 'Çerez Politikası | 724eczane.com', description: '724eczane.com çerez politikası. Sitede kullanılan çerezler ve kişisel veri işleme hakkında bilgi edinin.', iller: iller });
 });
 
 app.get('/health', function (req, res) {
