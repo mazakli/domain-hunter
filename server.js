@@ -83,13 +83,15 @@ function nosyHeaders(apiKey) {
 
 function parseRow(p) {
   return {
-    name:     p.pharmacyName || '',
-    dist:     p.district     || '',
-    address:  p.address      || '',
-    phone:    p.phone        || '',
-    lat:      p.latitude     || '',
-    lng:      p.longitude    || '',
-    distSlug: toSlug(p.district || '')
+    name:       p.pharmacyName  || '',
+    dist:       p.district      || '',
+    address:    p.address       || '',
+    phone:      p.phone         || '',
+    lat:        p.latitude      || '',
+    lng:        p.longitude     || '',
+    distSlug:   toSlug(p.district || ''),
+    dutyStart:  p.pharmacyDutyStart || '',
+    dutyEnd:    p.pharmacyDutyEnd   || ''
   };
 }
 

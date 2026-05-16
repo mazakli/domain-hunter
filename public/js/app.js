@@ -44,6 +44,7 @@
       var addressHtml = '';
       if (p.dist) addressHtml += '<div class="text-muted small mb-1"><i class="fa-solid fa-map-pin me-1"></i>' + esc(p.dist) + '</div>';
       addressHtml += '<div>' + esc(p.address || '—') + '</div>';
+      if (p.dutyEnd) addressHtml += '<div class="mt-1"><span class="badge bg-warning text-dark" style="font-size:0.75rem"><i class="fa-solid fa-clock me-1"></i>' + esc(p.dutyEnd) + '\'a kadar açık</span></div>';
 
       var nameHtml = esc(p.name);
       if (window.PAGE_ILSLUG && p.distSlug) {
