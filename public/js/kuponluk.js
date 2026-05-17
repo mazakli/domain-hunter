@@ -69,10 +69,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const kategorilerBtn = document.getElementById('kategorilerBtn');
   const kategorilerMenu = document.getElementById('kategorilerMenu');
   const kategorilerArrow = document.getElementById('kategorilerArrow');
+  const mainNav = document.getElementById('mainNav');
   if (kategorilerBtn && kategorilerMenu) {
     let hideTimer;
     const show = () => {
       clearTimeout(hideTimer);
+      if (mainNav) {
+        const rect = mainNav.getBoundingClientRect();
+        kategorilerMenu.style.top = rect.bottom + 'px';
+      }
       kategorilerMenu.classList.remove('hidden');
       if (kategorilerArrow) kategorilerArrow.style.transform = 'rotate(180deg)';
     };
@@ -80,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
       hideTimer = setTimeout(() => {
         kategorilerMenu.classList.add('hidden');
         if (kategorilerArrow) kategorilerArrow.style.transform = '';
-      }, 120);
+      }, 150);
     };
     kategorilerBtn.addEventListener('mouseenter', show);
     kategorilerBtn.addEventListener('mouseleave', hide);
