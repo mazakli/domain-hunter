@@ -65,6 +65,29 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', () => menu.classList.toggle('hidden'));
   }
 
+  // Kategoriler mega menu
+  const kategorilerBtn = document.getElementById('kategorilerBtn');
+  const kategorilerMenu = document.getElementById('kategorilerMenu');
+  const kategorilerArrow = document.getElementById('kategorilerArrow');
+  if (kategorilerBtn && kategorilerMenu) {
+    let hideTimer;
+    const show = () => {
+      clearTimeout(hideTimer);
+      kategorilerMenu.classList.remove('hidden');
+      if (kategorilerArrow) kategorilerArrow.style.transform = 'rotate(180deg)';
+    };
+    const hide = () => {
+      hideTimer = setTimeout(() => {
+        kategorilerMenu.classList.add('hidden');
+        if (kategorilerArrow) kategorilerArrow.style.transform = '';
+      }, 120);
+    };
+    kategorilerBtn.addEventListener('mouseenter', show);
+    kategorilerBtn.addEventListener('mouseleave', hide);
+    kategorilerMenu.addEventListener('mouseenter', show);
+    kategorilerMenu.addEventListener('mouseleave', hide);
+  }
+
   // FAQ accordion
   document.querySelectorAll('.faq-item .faq-question').forEach(q => {
     q.addEventListener('click', () => {
