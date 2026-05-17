@@ -61,6 +61,7 @@ function rateLimit(max) {
 // ── At Yarışı Sayfaları ──────────────────────────────────────────────
 var yarislar = require('./data/yarislar');
 var tjkApi   = require('./data/tjkApi');
+var blog     = require('./data/blog');
 
 function trToday() {
   return new Date(Date.now() + 3 * 60 * 60 * 1000).toISOString().split('T')[0];
@@ -292,7 +293,10 @@ app.get('/sitemap.xml', function (req, res) {
     { loc: base + '/gizlilik',            priority: '0.3', freq: 'yearly'  },
     { loc: base + '/kullanim-kosullari',  priority: '0.3', freq: 'yearly'  },
     { loc: base + '/cerez-politikasi',    priority: '0.3', freq: 'yearly'  },
-  ];
+    { loc: base + '/blog',               priority: '0.7', freq: 'weekly'  },
+  ].concat(blog.getAll().map(function (p) {
+    return { loc: base + '/blog/' + p.slug, priority: '0.6', freq: 'monthly' };
+  }));
   var xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
   urls.forEach(function (u) {
     xml += '  <url><loc>' + u.loc + '</loc><changefreq>' + u.freq + '</changefreq><priority>' + u.priority + '</priority><lastmod>' + today + '</lastmod></url>\n';
@@ -328,6 +332,26 @@ app.get('/veri-bilgisi', function (req, res) {
 
 app.get('/kupon-hesaplama', function (req, res) {
   res.render('kupon-hesaplama', { title: 'Ganyan Kupon Hesaplama | bankotahminleri.com', description: "3'lü, 4'lü, 5'li ve 6'lı ganyan kupon bedellerini kolayca hesaplayın. Her koşu için at sayısı girin, toplam TL tutarı anında görün.", canonical: 'https://www.bankotahminleri.com/kupon-hesaplama' });
+});
+
+app.get('/blog', function (req, res) {
+  var posts = blog.getAll();
+  res.render('blog', { posts: posts, title: 'Blog & Rehberler | bankotahminleri.com', description: 'At yarışı analiz, strateji ve temel bilgi rehberleri. AGF nedir, bahis türleri, tahmin ipuçları ve TJK hipodromları hakkında yazılar.', canonical: 'https://www.bankotahminleri.com/blog' });
+});
+
+app.get('/blog/:slug', function (req, res) {
+  var post = blog.getBySlug(req.params.slug);
+  if (!post) return res.status(404).render('blog', { posts: blog.getAll(), title: 'Yazı Bulunamadı | bankotahminleri.com', description: 'Aradığınız blog yazısı bulunamadı.', canonical: 'https://www.bankotahminleri.com/blog' });
+  var allPosts = blog.getAll();
+  var related  = allPosts.filter(function (p) { return p.slug !== post.slug; }).slice(0, 2);
+  res.render('blog-post', {
+    post: post,
+    allPosts: allPosts,
+    related: related,
+    title: post.title + ' | bankotahminleri.com',
+    description: post.description,
+    canonical: 'https://www.bankotahminleri.com/blog/' + post.slug
+  });
 });
 
 app.get('/health', function (req, res) { res.json({ status: 'ok', time: new Date().toISOString() }); });
