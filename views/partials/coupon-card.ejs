@@ -1,0 +1,71 @@
+<div class="bg-white rounded-xl shadow hover:shadow-lg transition border border-gray-100 overflow-hidden flex flex-col">
+  <!-- Store Info -->
+  <div class="flex items-center gap-3 px-4 pt-4 pb-2 border-b border-gray-50">
+    <% if (coupon.logo_url) { %>
+      <img src="<%= coupon.logo_url %>" alt="<%= coupon.store_name %>" class="w-10 h-10 object-contain rounded-lg border border-gray-100" />
+    <% } else { %>
+      <div class="w-10 h-10 rounded-lg flex items-center justify-center text-white text-lg font-bold flex-shrink-0" style="background:#FF6B00;">
+        <%= (coupon.store_name || 'K').charAt(0).toUpperCase() %>
+      </div>
+    <% } %>
+    <div class="min-w-0">
+      <a href="/magaza/<%= coupon.store_slug %>" class="text-sm font-semibold text-gray-700 hover:text-orange-600 transition truncate block"><%= coupon.store_name %></a>
+      <!-- Discount Badge -->
+      <% if (coupon.discount_type === 'percent') { %>
+        <span class="inline-block bg-green-100 text-green-700 text-xs font-bold px-2 py-0.5 rounded-full"><%= coupon.discount_value %>% İndirim</span>
+      <% } else if (coupon.discount_type === 'fixed') { %>
+        <span class="inline-block bg-blue-100 text-blue-700 text-xs font-bold px-2 py-0.5 rounded-full"><%= coupon.discount_value %> TL İndirim</span>
+      <% } else if (coupon.discount_type === 'free_shipping') { %>
+        <span class="inline-block bg-purple-100 text-purple-700 text-xs font-bold px-2 py-0.5 rounded-full">Ücretsiz Kargo</span>
+      <% } else { %>
+        <span class="inline-block bg-orange-100 text-xs font-bold px-2 py-0.5 rounded-full" style="color:#FF6B00;"><%= coupon.discount_value || 'Fırsat' %></span>
+      <% } %>
+    </div>
+  </div>
+  <!-- Coupon Title -->
+  <div class="px-4 py-3 flex-1">
+    <a href="/kupon/<%= coupon.id %>-<%= (coupon.slug || coupon.title.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'')) %>" class="text-sm font-medium text-gray-800 hover:text-orange-600 transition line-clamp-2 block"><%= coupon.title %></a>
+    <% if (coupon.is_verified == 1) { %>
+    <span class="inline-flex items-center gap-1 text-xs text-green-600 font-semibold mt-1">
+      <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+      Doğrulanmış
+    </span>
+    <% } %>
+  </div>
+  <!-- Coupon Code -->
+  <div class="px-4 pb-4">
+    <% if (coupon.code) { %>
+    <div class="flex items-center gap-2">
+      <div class="flex-1 bg-gray-50 border-2 border-dashed border-gray-200 rounded-lg px-3 py-2 font-mono text-sm text-gray-600 relative overflow-hidden">
+        <span class="coupon-code-display" id="code-display-<%= coupon.id %>">
+          <%= coupon.code.substring(0, 4) %><span class="blur-sm">****</span>
+        </span>
+      </div>
+      <button onclick="revealCode(this, '<%= coupon.code %>', '<%= coupon.id %>')" class="text-white text-xs font-semibold px-3 py-2 rounded-lg transition hover:opacity-90 whitespace-nowrap" style="background:#FF6B00;">
+        Kodu Göster
+      </button>
+    </div>
+    <% } else { %>
+    <a href="/kupon/<%= coupon.id %>-<%= (coupon.slug || coupon.title.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'')) %>" class="block w-full text-center text-white text-sm font-semibold px-4 py-2 rounded-lg transition hover:opacity-90" style="background:#FF6B00;">
+      Fırsatı Gör
+    </a>
+    <% } %>
+  </div>
+</div>
+
+<script>
+function revealCode(btn, code, id) {
+  var display = document.getElementById('code-display-' + id);
+  if (display) {
+    display.innerHTML = '<span class="font-bold text-gray-800">' + code + '</span>';
+  }
+  btn.textContent = 'Kopyala';
+  btn.onclick = function() {
+    navigator.clipboard.writeText(code).then(function() {
+      btn.textContent = 'Kopyalandı!';
+      btn.style.background = '#16a34a';
+      setTimeout(function() { btn.textContent = 'Kopyala'; btn.style.background = '#FF6B00'; }, 2000);
+    });
+  };
+}
+</script>

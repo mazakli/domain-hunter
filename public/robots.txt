@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
-Disallow: /api/
-Disallow: /debug-env
-Disallow: /health
+Disallow: /profil
+Disallow: /giris
+Disallow: /kayit
 
-Sitemap: https://www.724eczane.com/sitemap.xml
+Sitemap: https://kuponluk.com/sitemap.xml

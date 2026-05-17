@@ -1,0 +1,28 @@
+<%- include('partials/head') %>
+<%- include('partials/navbar') %>
+
+<div class="min-h-screen flex items-center justify-center px-4">
+  <div class="text-center max-w-md">
+    <div class="text-8xl mb-6">😕</div>
+    <h1 class="text-6xl font-bold mb-4" style="color:#FF6B00">404</h1>
+    <h2 class="text-2xl font-bold text-gray-800 mb-4">Sayfa Bulunamadı</h2>
+    <p class="text-gray-500 mb-8 leading-relaxed">
+      Aradığınız sayfa bulunamadı. Silinmiş veya taşınmış olabilir.
+    </p>
+    <div class="flex flex-col sm:flex-row gap-3 justify-center">
+      <a href="/" class="text-white px-6 py-3 rounded-xl font-semibold hover:opacity-90 transition" style="background:#FF6B00">
+        Ana Sayfaya Dön
+      </a>
+      <a href="/kategoriler" class="bg-gray-100 text-gray-700 px-6 py-3 rounded-xl font-semibold hover:bg-gray-200 transition">
+        Kategorilere Bak
+      </a>
+    </div>
+    <div class="mt-8">
+      <a href="/arama" class="text-sm hover:underline" style="color:#FF6B00">Kupon veya mağaza arayın →</a>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/footer') %>
+</body>
+</html>

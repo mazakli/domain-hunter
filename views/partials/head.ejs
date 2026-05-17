@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <meta name="description" content="<%= typeof description !== 'undefined' ? description : 'Kuponluk.com - Türkiye\'nin en büyük kupon ve indirim platformu. Yüzlerce marka için güncel kupon kodları ve fırsatlar.' %>">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="<%= title %>">
+  <meta property="og:description" content="<%= typeof description !== 'undefined' ? description : 'Kuponluk.com - Türkiye\'nin kupon merkezi' %>">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="/img/og-image.png">
+  <link rel="canonical" href="https://kuponluk.com<%= typeof canonicalPath !== 'undefined' ? canonicalPath : '' %>">
+  <link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: { DEFAULT: '#FF6B00', dark: '#e55f00', light: '#ff8533' },
+            dark: '#1a1a2e',
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/css/kuponluk.css">
+  <!-- Google AdSense placeholder (activate when approved) -->
+  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">

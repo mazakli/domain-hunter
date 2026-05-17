@@ -1,57 +1,108 @@
-<footer class="footer-dark mt-auto py-5">
-  <div class="container">
-    <div class="row g-4 mb-4">
-
-      <div class="col-lg-4 col-md-12">
-        <a href="/" class="text-white text-decoration-none d-inline-flex align-items-center gap-2 mb-3">
-          <i class="fa-solid fa-pills text-danger fs-5"></i>
-          <strong class="fs-6">724eczane.com</strong>
-        </a>
-        <p class="footer-text small lh-base mb-2">
-          724eczane.com, Türkiye'nin 81 ilinde ve tüm ilçelerinde nöbetçi eczane bilgisine anında erişim sağlayan ücretsiz bir kamu hizmeti platformudur. Yetkili API kaynakları üzerinden beslenen sistem; gün içinde 09:00, 12:00, 15:00, 17:00 ve 19:00'da otomatik olarak güncellenir. Herhangi bir üyelik, API anahtarı veya ödeme gerektirmeyen bu platform, akıllı konum özelliği ve harita entegrasyonuyla vatandaşların acil sağlık ihtiyaçlarında doğru eczaneye en kısa sürede ulaşmasını sağlamayı misyon edinmiştir.
-        </p>
-        <p class="footer-text small mb-0">
-          <i class="fa-solid fa-phone-volume me-1 text-danger"></i>
-          <strong class="text-white">112</strong> Acil Yardım &bull; <strong class="text-white">184</strong> SABİM Sağlık Hattı
-        </p>
+<footer class="mt-16" style="background:#1a1a2e;color:#e2e8f0">
+  <!-- Newsletter Banner -->
+  <div style="background:#FF6B00" class="py-10 px-4">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+      <div>
+        <h3 class="text-white text-xl font-bold mb-1">🔔 Fırsatları Kaçırma!</h3>
+        <p class="text-orange-100 text-sm">En yeni kuponlar ve kampanyalar için abone ol, bildirim al.</p>
       </div>
-
-      <div class="col-lg-2 col-md-4 col-6">
-        <h6 class="text-white small fw-bold text-uppercase mb-3">Hizmetler</h6>
-        <ul class="list-unstyled mb-0">
-          <li class="mb-2"><a href="/" class="footer-link"><i class="fa-solid fa-house me-1"></i>Ana Sayfa</a></li>
-          <li class="mb-2"><a href="/sitene-ekle" class="footer-link"><i class="fa-solid fa-code me-1"></i>Sitene Ekle</a></li>
-          <li class="mb-2"><a href="/eczane-ekle" class="footer-link"><i class="fa-solid fa-plus-circle me-1"></i>Eczane Ekle</a></li>
-          <li class="mb-2"><a href="/iletisim" class="footer-link"><i class="fa-solid fa-envelope me-1"></i>İletişim</a></li>
-        </ul>
-      </div>
-
-      <div class="col-lg-3 col-md-4 col-6">
-        <h6 class="text-white small fw-bold text-uppercase mb-3">Faydalı Bağlantılar</h6>
-        <ul class="list-unstyled mb-0">
-          <li class="mb-2"><a href="https://enabiz.gov.tr/" target="_blank" rel="noopener noreferrer" class="footer-link"><i class="fa-solid fa-heart-pulse me-1"></i>e-Nabız</a></li>
-          <li class="mb-2"><a href="https://www.turkiye.gov.tr/" target="_blank" rel="noopener noreferrer" class="footer-link"><i class="fa-solid fa-landmark me-1"></i>e-Devlet</a></li>
-          <li class="mb-2"><a href="https://www.cimer.gov.tr/" target="_blank" rel="noopener noreferrer" class="footer-link"><i class="fa-solid fa-comment-dots me-1"></i>CİMER</a></li>
-          <li class="mb-2"><a href="https://www.saglik.gov.tr/" target="_blank" rel="noopener noreferrer" class="footer-link"><i class="fa-solid fa-hospital me-1"></i>Sağlık Bakanlığı</a></li>
-          <li class="mb-2"><a href="https://mhrs.gov.tr/" target="_blank" rel="noopener noreferrer" class="footer-link"><i class="fa-solid fa-calendar-check me-1"></i>MHRS Randevu</a></li>
-        </ul>
-      </div>
-
-      <div class="col-lg-3 col-md-4 col-12">
-        <h6 class="text-white small fw-bold text-uppercase mb-3">Yasal</h6>
-        <ul class="list-unstyled mb-0">
-          <li class="mb-2"><a href="/gizlilik" class="footer-link"><i class="fa-solid fa-shield-halved me-1"></i>Gizlilik Politikası</a></li>
-          <li class="mb-2"><a href="/kullanim-kosullari" class="footer-link"><i class="fa-solid fa-file-contract me-1"></i>Kullanım Koşulları</a></li>
-          <li class="mb-2"><a href="/cerez-politikasi" class="footer-link"><i class="fa-solid fa-cookie-bite me-1"></i>Çerez Politikası</a></li>
-          <li class="mb-2"><a href="/sitemap.xml" target="_blank" rel="noopener" class="footer-link"><i class="fa-solid fa-sitemap me-1"></i>Sitemap</a></li>
-        </ul>
-      </div>
-
+      <form id="newsletterForm" class="flex gap-2 w-full md:w-auto">
+        <input type="email" name="email" placeholder="E-posta adresiniz" required
+          class="flex-1 md:w-80 px-4 py-2.5 rounded-xl text-gray-800 text-sm focus:outline-none">
+        <button type="submit" class="bg-white text-orange-600 px-5 py-2.5 rounded-xl font-semibold text-sm hover:bg-orange-50 transition whitespace-nowrap">
+          Abone Ol
+        </button>
+      </form>
     </div>
-    <hr class="border-secondary">
-    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
-      <p class="footer-text small mb-0">&copy; <%= new Date().getFullYear() %> 724eczane.com &mdash; Tüm hakları saklıdır.</p>
-      <p class="footer-text small mb-0">Nöbetçi eczane bilgileri resmi kaynaklardan sağlanmaktadır.</p>
+    <p id="newsletterMsg" class="text-center text-white text-sm mt-3 hidden"></p>
+  </div>
+
+  <!-- Telegram CTA -->
+  <div class="py-8 px-4 border-b border-white/10">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-4">
+        <div class="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center">
+          <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.96 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        </div>
+        <div>
+          <p class="font-semibold text-white">Telegram Kanalımıza Katıl</p>
+          <p class="text-sm text-gray-400">Anlık kupon bildirimleri ve özel fırsatlar için</p>
+        </div>
+      </div>
+      <a href="/telegram" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2.5 rounded-xl font-semibold text-sm transition">
+        Kanala Katıl →
+      </a>
     </div>
   </div>
+
+  <!-- Footer Links -->
+  <div class="py-12 px-4">
+    <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
+      <!-- Brand -->
+      <div class="col-span-2 md:col-span-1">
+        <div class="flex items-center gap-2 mb-4">
+          <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:#FF6B00">
+            <span class="text-white font-bold">K</span>
+          </div>
+          <span class="font-bold text-lg text-white">Kuponluk<span style="color:#FF6B00">.com</span></span>
+        </div>
+        <p class="text-sm text-gray-400 mb-4 leading-relaxed">
+          Türkiye'nin kupon ve indirim platformu. Yüzlerce markadan güncel kupon kodları, fırsatlar ve kampanyalar tek yerde.
+        </p>
+        <div class="flex gap-3">
+          <a href="/telegram" class="w-9 h-9 rounded-lg bg-blue-600 hover:bg-blue-700 flex items-center justify-center transition">
+            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.96 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Hızlı Bağlantılar -->
+      <div>
+        <h4 class="font-semibold text-white mb-4">Hızlı Bağlantılar</h4>
+        <ul class="space-y-2 text-sm text-gray-400">
+          <li><a href="/" class="hover:text-orange-400 transition">Ana Sayfa</a></li>
+          <li><a href="/kategoriler" class="hover:text-orange-400 transition">Kategoriler</a></li>
+          <li><a href="/magazalar" class="hover:text-orange-400 transition">Mağazalar</a></li>
+          <li><a href="/kupon/son-eklenenler" class="hover:text-orange-400 transition">Son Eklenenler</a></li>
+          <li><a href="/kupon/populer" class="hover:text-orange-400 transition">Popüler Kuponlar</a></li>
+          <li><a href="/kupon-gonder" class="hover:text-orange-400 transition">Kupon Gönder</a></li>
+        </ul>
+      </div>
+
+      <!-- Kategoriler -->
+      <div>
+        <h4 class="font-semibold text-white mb-4">Popüler Kategoriler</h4>
+        <ul class="space-y-2 text-sm text-gray-400">
+          <li><a href="/kategori/moda-giyim" class="hover:text-orange-400 transition">👗 Moda & Giyim</a></li>
+          <li><a href="/kategori/elektronik" class="hover:text-orange-400 transition">📱 Elektronik</a></li>
+          <li><a href="/kategori/yemek-restoran" class="hover:text-orange-400 transition">🍔 Yemek</a></li>
+          <li><a href="/kategori/seyahat" class="hover:text-orange-400 transition">✈️ Seyahat</a></li>
+          <li><a href="/kategori/kozmetik-guzellik" class="hover:text-orange-400 transition">💄 Kozmetik</a></li>
+          <li><a href="/kategori/spor-outdoor" class="hover:text-orange-400 transition">⚽ Spor</a></li>
+        </ul>
+      </div>
+
+      <!-- Yardım -->
+      <div>
+        <h4 class="font-semibold text-white mb-4">Yardım & Bilgi</h4>
+        <ul class="space-y-2 text-sm text-gray-400">
+          <li><a href="/hakkimizda" class="hover:text-orange-400 transition">Hakkımızda</a></li>
+          <li><a href="/sss" class="hover:text-orange-400 transition">Sıkça Sorulan Sorular</a></li>
+          <li><a href="/iletisim" class="hover:text-orange-400 transition">İletişim</a></li>
+          <li><a href="/telegram" class="hover:text-orange-400 transition">Telegram Kanalı</a></li>
+          <li><a href="/gizlilik-politikasi" class="hover:text-orange-400 transition">Gizlilik Politikası</a></li>
+          <li><a href="/kullanim-kosullari" class="hover:text-orange-400 transition">Kullanım Koşulları</a></li>
+          <li><a href="/cerez-politikasi" class="hover:text-orange-400 transition">Çerez Politikası</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Bar -->
+  <div class="border-t py-4 px-4 text-center text-xs text-gray-500" style="border-color:rgba(255,255,255,0.1)">
+    <p>© 2024 Kuponluk.com — Tüm hakları saklıdır. Kupon kodları ilgili markalara aittir.</p>
+    <p class="mt-1">Bu site reklam içerebilir. Kupon geçerliliğini kullanmadan önce kontrol ediniz.</p>
+  </div>
 </footer>
+
+<script src="/js/kuponluk.js"></script>
