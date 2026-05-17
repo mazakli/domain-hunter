@@ -93,6 +93,17 @@ document.addEventListener('DOMContentLoaded', () => {
     kategorilerMenu.addEventListener('mouseleave', hide);
   }
 
+  // Brand tabs
+  document.querySelectorAll('.brand-tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.brand-tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.brand-tab-panel').forEach(p => p.classList.add('hidden'));
+      btn.classList.add('active');
+      const panel = document.getElementById('brand-tab-' + btn.dataset.tab);
+      if (panel) panel.classList.remove('hidden');
+    });
+  });
+
   // FAQ accordion
   document.querySelectorAll('.faq-item .faq-question').forEach(q => {
     q.addEventListener('click', () => {

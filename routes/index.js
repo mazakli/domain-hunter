@@ -5,34 +5,6 @@ const { getDb } = require('../database');
 router.get('/', (req, res) => {
   const db = getDb();
 
-  const featuredStores = db.prepare(`
-    SELECT s.*, c.name as category_name, c.icon as category_icon,
-           COUNT(cp.id) as active_coupons
-    FROM stores s
-    LEFT JOIN categories c ON s.category_id = c.id
-    LEFT JOIN coupons cp ON cp.store_id = s.id
-    WHERE s.is_featured = 1
-    GROUP BY s.id
-    ORDER BY s.name
-    LIMIT 20
-  `).all();
-
-  const newCoupons = db.prepare(`
-    SELECT cp.*, s.name as store_name, s.slug as store_slug, s.logo_url
-    FROM coupons cp
-    JOIN stores s ON cp.store_id = s.id
-    ORDER BY cp.created_at DESC
-    LIMIT 8
-  `).all();
-
-  const popularCoupons = db.prepare(`
-    SELECT cp.*, s.name as store_name, s.slug as store_slug, s.logo_url
-    FROM coupons cp
-    JOIN stores s ON cp.store_id = s.id
-    ORDER BY cp.use_count DESC
-    LIMIT 8
-  `).all();
-
   const categories = db.prepare(`
     SELECT c.*, COUNT(cp.id) as coupon_count
     FROM categories c
@@ -40,6 +12,51 @@ router.get('/', (req, res) => {
     LEFT JOIN coupons cp ON cp.store_id = s.id
     GROUP BY c.id
     ORDER BY c.name
+  `).all();
+
+  const popularBrands = db.prepare(`
+    SELECT s.id, s.name, s.slug, s.logo_url,
+           COUNT(cp.id) as coupon_count,
+           MAX(cp.discount_value) as max_discount,
+           COALESCE(SUM(cp.use_count), 0) as total_uses
+    FROM stores s
+    JOIN coupons cp ON cp.store_id = s.id
+    GROUP BY s.id
+    ORDER BY total_uses DESC
+    LIMIT 16
+  `).all();
+
+  const newBrands = db.prepare(`
+    SELECT s.id, s.name, s.slug, s.logo_url,
+           COUNT(cp.id) as coupon_count,
+           MAX(cp.discount_value) as max_discount
+    FROM stores s
+    JOIN coupons cp ON cp.store_id = s.id
+    GROUP BY s.id
+    ORDER BY MAX(cp.created_at) DESC
+    LIMIT 16
+  `).all();
+
+  const expiringBrands = db.prepare(`
+    SELECT s.id, s.name, s.slug, s.logo_url,
+           COUNT(cp.id) as coupon_count,
+           MAX(cp.discount_value) as max_discount
+    FROM stores s
+    JOIN coupons cp ON cp.store_id = s.id
+    WHERE cp.expires_at IS NOT NULL AND cp.expires_at > datetime('now')
+    GROUP BY s.id
+    ORDER BY MIN(cp.expires_at) ASC
+    LIMIT 16
+  `).all();
+
+  const sliderStores = db.prepare(`
+    SELECT s.id, s.name, s.slug, s.logo_url, COUNT(cp.id) as coupon_count
+    FROM stores s
+    LEFT JOIN coupons cp ON cp.store_id = s.id
+    GROUP BY s.id
+    HAVING coupon_count > 0
+    ORDER BY s.name
+    LIMIT 24
   `).all();
 
   const stats = {
@@ -51,10 +68,11 @@ router.get('/', (req, res) => {
 
   res.render('index', {
     title: 'Kuponluk.com - Türkiye\'nin Kupon Merkezi',
-    featuredStores,
-    newCoupons,
-    popularCoupons,
     categories,
+    popularBrands,
+    newBrands,
+    expiringBrands,
+    sliderStores,
     stats,
   });
 });
@@ -77,7 +95,6 @@ router.get('/arama', (req, res) => {
         LIMIT 20
       `).all(`%${q}%`, `%${q}%`, `%${q}%`);
     }
-
     if (type === 'all' || type === 'store') {
       stores = db.prepare(`
         SELECT s.*, c.name as category_name

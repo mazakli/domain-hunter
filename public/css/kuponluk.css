@@ -197,6 +197,34 @@
   margin-bottom: 1rem;
 }
 
-/* Tabs */
-.tab-btn { padding: 8px 20px; border-radius: 10px; font-size: 0.875rem; font-weight: 600; cursor: pointer; border: none; background: #f3f4f6; color: #6b7280; transition: all 0.2s; }
-.tab-btn.active { background: #FF6B00; color: white; }
+/* Brand Slider */
+.slider-wrapper { overflow: hidden; width: 100%; }
+.slider-track {
+  display: flex;
+  align-items: center;
+  animation: brandSlide 35s linear infinite;
+  width: max-content;
+}
+.slider-wrapper:hover .slider-track { animation-play-state: paused; }
+@keyframes brandSlide {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Brand Tab Buttons */
+.brand-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 2px solid #e5e7eb;
+  background: white;
+  color: #6b7280;
+  transition: all 0.2s;
+}
+.brand-tab-btn:hover { border-color: #FF6B00; color: #FF6B00; }
+.brand-tab-btn.active { background: #FF6B00; border-color: #FF6B00; color: white; }
+.brand-card { text-decoration: none; }
