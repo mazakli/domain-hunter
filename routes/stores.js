@@ -71,10 +71,26 @@ router.get('/:slug', (req, res) => {
     isFavorite = !!fav;
   }
 
+  const reviewsCount = db.prepare('SELECT COUNT(*) as c FROM coupon_reviews cr JOIN coupons c ON c.id = cr.coupon_id WHERE c.store_id = ?').get(store.id).c;
+  const subscriberCount = db.prepare('SELECT COUNT(*) as c FROM store_subscribers WHERE store_id = ?').get(store.id).c;
+  const subSuccess = req.query.sub === 'ok';
+
   res.render('store', {
     title: `${store.name} Kupon Kodları ve İndirimler - Kuponluk.com`,
-    store, coupons, relatedStores, isFavorite,
+    store, coupons, relatedStores, isFavorite, reviewsCount, subscriberCount, subSuccess,
   });
+});
+
+router.post('/:slug/abone-ol', (req, res) => {
+  const db = getDb();
+  const store = db.prepare('SELECT id FROM stores WHERE slug = ?').get(req.params.slug);
+  if (!store) return res.redirect('/magazalar');
+  const { email } = req.body;
+  if (!email || !email.includes('@')) return res.redirect('/magaza/' + req.params.slug + '?sub=error');
+  try {
+    db.prepare('INSERT OR IGNORE INTO store_subscribers (store_id, email) VALUES (?, ?)').run(store.id, email.toLowerCase().trim());
+  } catch(e) {}
+  res.redirect('/magaza/' + req.params.slug + '?sub=ok');
 });
 
 router.post('/:slug/favori', (req, res) => {

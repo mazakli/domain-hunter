@@ -43,9 +43,9 @@ router.get('/', (req, res) => {
            MAX(cp.discount_value) as max_discount
     FROM stores s
     JOIN coupons cp ON cp.store_id = s.id
-    WHERE cp.expires_at IS NOT NULL AND cp.expires_at > datetime('now')
+    WHERE cp.expiry_date IS NOT NULL AND cp.expiry_date > datetime('now')
     GROUP BY s.id
-    ORDER BY MIN(cp.expires_at) ASC
+    ORDER BY MIN(cp.expiry_date) ASC
     LIMIT 16
   `).all();
 

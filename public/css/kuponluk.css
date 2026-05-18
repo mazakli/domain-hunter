@@ -211,6 +211,11 @@
   100% { transform: translateX(-50%); }
 }
 
+/* Promo Slider */
+.promo-slider { min-height: 180px; }
+.promo-slide { position: relative; width: 100%; }
+.promo-dot { cursor: pointer; border: none; padding: 0; }
+
 /* Brand Tab Buttons */
 .brand-tab-btn {
   display: inline-flex;

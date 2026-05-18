@@ -27,25 +27,67 @@
   </div>
 </section>
 
-<!-- Categories Grid -->
-<% if (categories && categories.length > 0) { %>
-<section class="py-10 px-4 bg-white">
+<!-- Promo Slider -->
+<section class="py-6 px-4 bg-white">
   <div class="max-w-6xl mx-auto">
-    <div class="flex items-center justify-between mb-5">
-      <h2 class="text-xl font-bold text-gray-800">Kategoriler</h2>
-      <a href="/kategoriler" class="text-sm font-medium hover:underline" style="color:#FF6B00;">Tümünü Gör →</a>
-    </div>
-    <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3">
-      <% categories.forEach(function(cat) { %>
-      <a href="/kategori/<%= cat.slug %>" class="flex flex-col items-center p-3 rounded-2xl border border-gray-100 hover:border-orange-300 hover:shadow-md transition group bg-gray-50 hover:bg-orange-50">
-        <div class="w-9 h-9 rounded-full flex items-center justify-center mb-1.5 text-white text-xs font-bold" style="background:#FF6B00"><%= cat.name ? cat.name.charAt(0).toUpperCase() : 'K' %></div>
-        <span class="text-xs font-semibold text-gray-700 group-hover:text-orange-600 text-center leading-tight"><%= cat.name %></span>
-      </a>
-      <% }); %>
+    <div class="promo-slider relative overflow-hidden rounded-2xl" id="promoSlider">
+      <!-- Slide 1 -->
+      <div class="promo-slide" style="background: linear-gradient(135deg, #FF6B00, #ff8c42);">
+        <div class="flex items-center justify-between h-full px-8 py-10">
+          <div>
+            <div class="text-white text-xs font-bold uppercase tracking-widest mb-2 opacity-80">Özel Teklif</div>
+            <h3 class="text-white text-2xl md:text-3xl font-extrabold mb-3">Moda & Giyimde<br>%50'ye Kadar İndirim</h3>
+            <a href="/kategori/moda-giyim" class="inline-block bg-white font-bold px-6 py-2.5 rounded-xl text-sm hover:bg-orange-50 transition" style="color:#FF6B00">Kuponları Gör</a>
+          </div>
+          <div class="hidden md:flex w-32 h-32 rounded-full items-center justify-center opacity-20" style="background:white">
+            <svg class="w-20 h-20" fill="white" viewBox="0 0 24 24"><path d="M20.59 6.51l-7.07-7.07c-.39-.39-1.02-.39-1.41 0L.59 10.96c-.39.39-.39 1.02 0 1.41l7.07 7.07c.39.39 1.02.39 1.41 0l11.52-11.52c.39-.39.39-1.02 0-1.41z"/></svg>
+          </div>
+        </div>
+      </div>
+      <!-- Slide 2 -->
+      <div class="promo-slide hidden" style="background: linear-gradient(135deg, #1a1a2e, #16213e);">
+        <div class="flex items-center justify-between h-full px-8 py-10">
+          <div>
+            <div class="text-orange-400 text-xs font-bold uppercase tracking-widest mb-2">Teknoloji Fırsatları</div>
+            <h3 class="text-white text-2xl md:text-3xl font-extrabold mb-3">Elektronik Ürünlerde<br>En İyi Kuponlar</h3>
+            <a href="/kategori/elektronik" class="inline-block font-bold px-6 py-2.5 rounded-xl text-sm hover:opacity-90 transition text-white" style="background:#FF6B00">Kuponları Gör</a>
+          </div>
+          <div class="hidden md:flex w-32 h-32 rounded-full items-center justify-center opacity-10" style="background:#FF6B00">
+            <svg class="w-20 h-20 text-white" fill="white" viewBox="0 0 24 24"><path d="M17 2H7c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-5 18c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm5-4H7V4h10v12z"/></svg>
+          </div>
+        </div>
+      </div>
+      <!-- Slide 3 -->
+      <div class="promo-slide hidden" style="background: linear-gradient(135deg, #0f9b8e, #16c79a);">
+        <div class="flex items-center justify-between h-full px-8 py-10">
+          <div>
+            <div class="text-white text-xs font-bold uppercase tracking-widest mb-2 opacity-80">Yeni Üyelere Özel</div>
+            <h3 class="text-white text-2xl md:text-3xl font-extrabold mb-3">Üye Ol, Ekstra<br>İndirimler Kazan</h3>
+            <a href="/kayit" class="inline-block bg-white font-bold px-6 py-2.5 rounded-xl text-sm hover:bg-green-50 transition" style="color:#0f9b8e">Hemen Üye Ol</a>
+          </div>
+          <div class="hidden md:flex w-32 h-32 rounded-full items-center justify-center opacity-20" style="background:white">
+            <svg class="w-20 h-20" fill="white" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Arrows -->
+      <button id="promoPrev" class="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white bg-opacity-80 hover:bg-opacity-100 flex items-center justify-center shadow transition z-10">
+        <svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+      </button>
+      <button id="promoNext" class="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white bg-opacity-80 hover:bg-opacity-100 flex items-center justify-center shadow transition z-10">
+        <svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </button>
+
+      <!-- Dots -->
+      <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
+        <button class="promo-dot w-2 h-2 rounded-full bg-white opacity-100 transition" data-slide="0"></button>
+        <button class="promo-dot w-2 h-2 rounded-full bg-white opacity-40 transition" data-slide="1"></button>
+        <button class="promo-dot w-2 h-2 rounded-full bg-white opacity-40 transition" data-slide="2"></button>
+      </div>
     </div>
   </div>
 </section>
-<% } %>
 
 <!-- Brand Slider -->
 <% if (sliderStores && sliderStores.length > 0) { %>

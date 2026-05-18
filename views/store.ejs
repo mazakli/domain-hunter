@@ -29,13 +29,15 @@
         <div class="flex gap-3 flex-shrink-0">
           <% if (store.website_url) { %>
           <a href="<%= store.website_url %>" target="_blank" rel="nofollow noopener" class="flex items-center gap-2 px-5 py-2 rounded-xl border-2 font-semibold text-gray-700 border-gray-200 hover:border-orange-400 hover:text-orange-600 transition text-sm">
-            🌐 Siteye Git
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>
+            Siteye Git
           </a>
           <% } %>
           <% if (currentUser) { %>
           <form action="/magaza/<%= store.slug %>/favori" method="POST">
             <button type="submit" class="flex items-center gap-2 px-5 py-2 rounded-xl border-2 font-semibold transition text-sm <%= isFavorite ? 'text-white border-transparent' : 'text-gray-700 border-gray-200 hover:border-orange-400 hover:text-orange-600' %>" style="<%= isFavorite ? 'background:#FF6B00; border-color:#FF6B00;' : '' %>">
-              <%= isFavorite ? '❤️ Favorilerde' : '🤍 Favoriye Ekle' %>
+              <svg class="w-4 h-4" fill="<%= isFavorite ? 'currentColor' : 'none' %>" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+              <%= isFavorite ? 'Favorilerde' : 'Favoriye Ekle' %>
             </button>
           </form>
           <% } %>
@@ -65,15 +67,44 @@
       </div>
       <% } else { %>
       <div class="bg-white rounded-2xl border border-gray-100 shadow p-12 text-center">
-        <div class="text-5xl mb-4">🏷️</div>
+        <div class="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4" style="background:#fff3e0;">
+          <svg class="w-7 h-7" fill="none" stroke="#FF6B00" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
+        </div>
         <h3 class="text-lg font-semibold text-gray-700 mb-2">Henüz Kupon Yok</h3>
         <p class="text-gray-500">Bu mağaza için şu an aktif kupon bulunmamaktadır.</p>
       </div>
       <% } %>
     </div>
 
-    <!-- Sidebar: Related Stores -->
-    <aside class="lg:w-64 flex-shrink-0">
+    <!-- Sidebar: Related Stores + Subscription -->
+    <aside class="lg:w-64 flex-shrink-0 space-y-5">
+      <!-- Subscription Box -->
+      <div class="bg-orange-50 border border-orange-100 rounded-2xl p-6">
+        <h3 class="font-bold text-gray-800 mb-1">Bu Markadan Bildirim Al</h3>
+        <p class="text-sm text-gray-500 mb-4">Yeni kuponlar eklendiğinde e-posta ile haberdar ol.<% if(subscriberCount > 0) { %> <span class="font-semibold text-orange-600"><%= subscriberCount %> abone</span><% } %></p>
+        <% if(subSuccess) { %><p class="text-green-600 text-sm font-semibold mb-3">Abone oldunuz!</p><% } %>
+        <form action="/magaza/<%= store.slug %>/abone-ol" method="POST" class="flex flex-col gap-2">
+          <input type="email" name="email" placeholder="E-posta adresiniz" required class="border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300">
+          <button type="submit" class="text-white px-5 py-2.5 rounded-xl font-semibold text-sm hover:opacity-90 transition" style="background:#FF6B00">Abone Ol</button>
+        </form>
+      </div>
+
+      <!-- Store About -->
+      <% if (store.description || store.website_url) { %>
+      <div class="bg-white rounded-2xl shadow border border-gray-100 p-5">
+        <h3 class="font-bold text-gray-800 mb-3">Marka Hakkında</h3>
+        <% if (store.description) { %>
+        <p class="text-sm text-gray-600 mb-3 leading-relaxed"><%= store.description %></p>
+        <% } %>
+        <% if (store.website_url) { %>
+        <a href="<%= store.website_url %>" target="_blank" rel="nofollow noopener" class="flex items-center gap-2 text-sm font-semibold hover:text-orange-600 transition" style="color:#FF6B00;">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>
+          Resmi Siteye Git
+        </a>
+        <% } %>
+      </div>
+      <% } %>
+
       <% if (relatedStores && relatedStores.length > 0) { %>
       <div class="bg-white rounded-2xl shadow border border-gray-100 overflow-hidden sticky top-4">
         <div class="px-5 py-4 border-b border-gray-100" style="background:#FF6B00;">

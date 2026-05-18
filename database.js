@@ -116,7 +116,34 @@ function initDb() {
       notify_push INTEGER DEFAULT 1,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
+
+    CREATE TABLE IF NOT EXISTS coupon_reviews (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      coupon_id INTEGER NOT NULL,
+      user_id INTEGER NOT NULL,
+      rating INTEGER NOT NULL CHECK(rating BETWEEN 1 AND 5),
+      comment TEXT,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      UNIQUE(coupon_id, user_id),
+      FOREIGN KEY (coupon_id) REFERENCES coupons(id),
+      FOREIGN KEY (user_id) REFERENCES users(id)
+    );
+
+    CREATE TABLE IF NOT EXISTS store_subscribers (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      store_id INTEGER NOT NULL,
+      email TEXT NOT NULL,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      UNIQUE(store_id, email),
+      FOREIGN KEY (store_id) REFERENCES stores(id)
+    );
   `);
+
+  try { db.exec('ALTER TABLE stores ADD COLUMN founded_year TEXT'); } catch(e) {}
+  try { db.exec('ALTER TABLE stores ADD COLUMN about_text TEXT'); } catch(e) {}
+  try { db.exec('ALTER TABLE stores ADD COLUMN discount_info TEXT'); } catch(e) {}
+  try { db.exec('ALTER TABLE stores ADD COLUMN shipping_info TEXT'); } catch(e) {}
+  try { db.exec('ALTER TABLE stores ADD COLUMN return_policy TEXT'); } catch(e) {}
 
   seedData(db);
 }

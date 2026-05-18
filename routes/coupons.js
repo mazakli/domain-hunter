@@ -88,10 +88,24 @@ router.get('/:id', (req, res) => {
     userRating = rated ? rated.rating : 0;
   }
 
+  const reviews = db.prepare('SELECT cr.*, u.username FROM coupon_reviews cr JOIN users u ON u.id = cr.user_id WHERE cr.coupon_id = ? ORDER BY cr.created_at DESC').all(coupon.id);
+
   res.render('coupon', {
     title: `${coupon.title} - ${coupon.store_name} Kupon - Kuponluk.com`,
-    coupon, storeCoupons, popularCoupons, isSaved, userRating,
+    coupon, storeCoupons, popularCoupons, isSaved, userRating, reviews,
   });
+});
+
+router.post('/:id/review', (req, res) => {
+  if (!req.session.user) return res.redirect('/giris?redirect=/kupon/' + req.params.id);
+  const db = getDb();
+  const { rating, comment } = req.body;
+  const ratingNum = parseInt(rating);
+  if (!ratingNum || ratingNum < 1 || ratingNum > 5) return res.redirect('/kupon/' + req.params.id);
+  try {
+    db.prepare('INSERT OR REPLACE INTO coupon_reviews (coupon_id, user_id, rating, comment) VALUES (?, ?, ?, ?)').run(req.params.id, req.session.user.id, ratingNum, comment || null);
+  } catch(e) {}
+  res.redirect('/kupon/' + req.params.id + '#reviews');
 });
 
 router.post('/:id/kaydet', (req, res) => {

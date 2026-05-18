@@ -17,7 +17,7 @@
       <a href="/magazalar" class="text-xs px-3 py-1.5 rounded-full font-medium transition <%= !catSlug ? 'text-white' : 'bg-gray-100 text-gray-600 hover:bg-orange-50 hover:text-orange-600' %>" style="<%= !catSlug ? 'background:#FF6B00;' : '' %>">Tümü</a>
       <% categories.forEach(function(cat) { %>
       <a href="/magazalar?kategori=<%= cat.slug %>" class="text-xs px-3 py-1.5 rounded-full font-medium transition <%= catSlug === cat.slug ? 'text-white' : 'bg-gray-100 text-gray-600 hover:bg-orange-50 hover:text-orange-600' %>" style="<%= catSlug === cat.slug ? 'background:#FF6B00;' : '' %>">
-        <%= cat.icon || '' %> <%= cat.name %>
+        <%= cat.name %>
       </a>
       <% }); %>
     </div>
@@ -52,8 +52,8 @@
       </div>
       <% } %>
       <span class="text-sm font-semibold text-gray-700 group-hover:text-orange-600 transition truncate w-full text-center"><%= store.name %></span>
-      <% if (store.category_icon || store.category_name) { %>
-      <span class="text-xs text-gray-400 mt-1"><%= store.category_icon || '' %> <%= store.category_name || '' %></span>
+      <% if (store.category_name) { %>
+      <span class="text-xs text-gray-400 mt-1"><%= store.category_name %></span>
       <% } %>
       <span class="inline-block mt-2 text-xs font-bold text-orange-600 bg-orange-50 px-2 py-0.5 rounded-full"><%= store.active_coupons || store.coupon_count || 0 %> kupon</span>
     </a>
@@ -61,7 +61,9 @@
   </div>
   <% } else { %>
   <div class="bg-white rounded-2xl border border-gray-100 shadow p-16 text-center">
-    <div class="text-6xl mb-4">🏬</div>
+    <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style="background:#fff3e0;">
+      <svg class="w-8 h-8" fill="none" stroke="#FF6B00" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+    </div>
     <h3 class="text-xl font-semibold text-gray-700 mb-2">Mağaza Bulunamadı</h3>
     <p class="text-gray-500">Seçili filtreler için mağaza bulunamadı. Filtrelerinizi değiştirmeyi deneyin.</p>
     <a href="/magazalar" class="inline-block mt-4 px-6 py-2 rounded-xl text-white font-semibold transition hover:opacity-90" style="background:#FF6B00;">Tüm Mağazalar</a>

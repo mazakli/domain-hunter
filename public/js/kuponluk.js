@@ -17,7 +17,7 @@ function showToast(msg, type = 'info') {
 // Copy to clipboard
 function copyText(text, el) {
   navigator.clipboard.writeText(text).then(() => {
-    showToast('Kupon kodu kopyalandı! ✓', 'success');
+    showToast('Kupon kodu kopyalandı!', 'success');
     if (el) { el.classList.add('copy-animation'); setTimeout(() => el.classList.remove('copy-animation'), 300); }
   }).catch(() => {
     const ta = document.createElement('textarea');
@@ -26,7 +26,7 @@ function copyText(text, el) {
     document.body.appendChild(ta); ta.focus(); ta.select();
     document.execCommand('copy');
     document.body.removeChild(ta);
-    showToast('Kupon kodu kopyalandı! ✓', 'success');
+    showToast('Kupon kodu kopyalandı!', 'success');
   });
 }
 
@@ -157,11 +157,11 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(data => {
           if (data.success) {
             if (data.action === 'saved') {
-              this.innerHTML = '❤️ Kaydedildi';
+              this.innerHTML = 'Kaydedildi';
               this.classList.add('text-orange-600');
               showToast('Kupon kaydedildi!', 'success');
             } else {
-              this.innerHTML = '🤍 Kaydet';
+              this.innerHTML = 'Kaydet';
               this.classList.remove('text-orange-600');
               showToast('Kupon kaldırıldı', 'info');
             }
@@ -182,12 +182,12 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(data => {
           if (data.success) {
             if (data.action === 'added') {
-              this.innerHTML = '❤️ Favorilerimde';
+              this.innerHTML = 'Favorilerimde';
               this.style.background = '#FF6B00';
               this.style.color = 'white';
               showToast('Mağaza favorilere eklendi!', 'success');
             } else {
-              this.innerHTML = '🤍 Favorilere Ekle';
+              this.innerHTML = 'Favorilere Ekle';
               this.style.background = '';
               this.style.color = '';
               showToast('Mağaza favorilerden çıkarıldı', 'info');
@@ -224,6 +224,77 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   }
+
+  // Promo Slider
+  const promoSlider = document.getElementById('promoSlider');
+  if (promoSlider) {
+    const slides = promoSlider.querySelectorAll('.promo-slide');
+    const dots = promoSlider.querySelectorAll('.promo-dot');
+    let current = 0;
+    let autoTimer;
+
+    const goTo = (n) => {
+      slides[current].classList.add('hidden');
+      dots[current].style.opacity = '0.4';
+      current = (n + slides.length) % slides.length;
+      slides[current].classList.remove('hidden');
+      dots[current].style.opacity = '1';
+    };
+
+    const startAuto = () => { autoTimer = setInterval(() => goTo(current + 1), 4000); };
+    const resetAuto = () => { clearInterval(autoTimer); startAuto(); };
+
+    document.getElementById('promoPrev')?.addEventListener('click', () => { goTo(current - 1); resetAuto(); });
+    document.getElementById('promoNext')?.addEventListener('click', () => { goTo(current + 1); resetAuto(); });
+    dots.forEach(d => d.addEventListener('click', () => { goTo(parseInt(d.dataset.slide)); resetAuto(); }));
+    startAuto();
+  }
+
+  // Star rating interactive
+  document.querySelectorAll('#starRating label').forEach((label, idx) => {
+    label.addEventListener('mouseenter', () => {
+      document.querySelectorAll('#starRating .star-icon').forEach((s, i) => {
+        s.style.color = i <= idx ? '#facc15' : '#d1d5db';
+      });
+    });
+    label.addEventListener('mouseleave', () => {
+      const checked = document.querySelector('#starRating input:checked');
+      const checkedIdx = checked ? parseInt(checked.value) - 1 : -1;
+      document.querySelectorAll('#starRating .star-icon').forEach((s, i) => {
+        s.style.color = i <= checkedIdx ? '#facc15' : '#d1d5db';
+      });
+    });
+    label.querySelector('input')?.addEventListener('change', () => {
+      document.querySelectorAll('#starRating .star-icon').forEach((s, i) => {
+        s.style.color = i <= idx ? '#facc15' : '#d1d5db';
+      });
+    });
+  });
+
+  // Newsletter popup - show after 3 seconds on first visit
+  if (!localStorage.getItem('nlPopupShown')) {
+    setTimeout(() => {
+      const popup = document.getElementById('newsletterPopup');
+      if (popup) popup.classList.remove('hidden');
+    }, 3000);
+  }
+  document.getElementById('closePopup')?.addEventListener('click', () => {
+    document.getElementById('newsletterPopup')?.classList.add('hidden');
+    localStorage.setItem('nlPopupShown', '1');
+  });
+  document.getElementById('popupOverlay')?.addEventListener('click', () => {
+    document.getElementById('newsletterPopup')?.classList.add('hidden');
+    localStorage.setItem('nlPopupShown', '1');
+  });
+  document.getElementById('popupNewsletterForm')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('popupEmail').value;
+    try {
+      await fetch('/api/newsletter', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({email}) });
+    } catch(e) {}
+    document.getElementById('newsletterPopup')?.classList.add('hidden');
+    localStorage.setItem('nlPopupShown', '1');
+  });
 
   // Profile tabs
   document.querySelectorAll('.tab-btn').forEach(btn => {

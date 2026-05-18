@@ -16,7 +16,7 @@
   <div class="rounded-2xl overflow-hidden shadow-lg mb-10">
     <div class="h-3" style="background: <%= category.color || '#FF6B00' %>;"></div>
     <div class="bg-white px-8 py-8 flex flex-col sm:flex-row items-center sm:items-start gap-5">
-      <div class="text-6xl flex-shrink-0"><%= category.icon || '🏷️' %></div>
+      <div class="w-16 h-16 rounded-2xl flex items-center justify-center text-white text-2xl font-bold flex-shrink-0" style="background:<%= category.color || '#FF6B00' %>"><%= category.name ? category.name.charAt(0).toUpperCase() : 'K' %></div>
       <div>
         <h1 class="text-3xl font-extrabold text-gray-900 mb-2"><%= category.name %></h1>
         <% if (category.description) { %>
@@ -24,10 +24,10 @@
         <% } %>
         <div class="flex flex-wrap gap-4">
           <span class="text-sm font-semibold text-gray-600">
-            🏬 <strong><%= (stores && stores.length) || 0 %></strong> Mağaza
+            <strong><%= (stores && stores.length) || 0 %></strong> Mağaza
           </span>
           <span class="text-sm font-semibold text-gray-600">
-            🏷️ <strong><%= (coupons && coupons.length) || 0 %></strong> Kupon
+            <strong><%= (coupons && coupons.length) || 0 %></strong> Kupon
           </span>
         </div>
       </div>
@@ -70,7 +70,9 @@
 
   <% if ((!coupons || coupons.length === 0) && (!stores || stores.length === 0)) { %>
   <div class="bg-white rounded-2xl border border-gray-100 shadow p-16 text-center">
-    <div class="text-6xl mb-4">🏷️</div>
+    <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style="background:#fff3e0;">
+      <svg class="w-8 h-8" fill="none" stroke="#FF6B00" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
+    </div>
     <h3 class="text-xl font-semibold text-gray-700 mb-2">Bu Kategoride Henüz İçerik Yok</h3>
     <p class="text-gray-500 mb-4">Yakında bu kategoride kuponlar eklenecek.</p>
     <a href="/kategoriler" class="inline-block px-6 py-2 rounded-xl text-white font-semibold transition hover:opacity-90" style="background:#FF6B00;">Diğer Kategoriler</a>

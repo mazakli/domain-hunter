@@ -1,3 +1,25 @@
+<!-- Newsletter Popup -->
+<div id="newsletterPopup" class="fixed inset-0 z-[9999] flex items-center justify-center p-4 hidden">
+  <div class="absolute inset-0 bg-black bg-opacity-50" id="popupOverlay"></div>
+  <div class="relative bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 z-10">
+    <button id="closePopup" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition">
+      <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+    </button>
+    <div class="text-center mb-6">
+      <div class="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4" style="background:#FF6B00">
+        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+      </div>
+      <h3 class="text-xl font-bold text-gray-800 mb-2">Fırsatları Kaçırma!</h3>
+      <p class="text-gray-500 text-sm">En yeni kuponlar ve özel indirimler için bültenimize abone ol.</p>
+    </div>
+    <form id="popupNewsletterForm">
+      <input type="email" id="popupEmail" placeholder="E-posta adresiniz" required class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300 mb-3">
+      <button type="submit" class="w-full text-white py-3 rounded-xl font-bold text-sm hover:opacity-90 transition" style="background:#FF6B00">Abone Ol</button>
+    </form>
+    <p class="text-center text-xs text-gray-400 mt-3">İstediğin zaman aboneliğini iptal edebilirsin.</p>
+  </div>
+</div>
+
 <footer class="mt-16" style="background:#1a1a2e;color:#e2e8f0">
   <!-- Newsletter Banner -->
   <div style="background:#FF6B00" class="py-10 px-4">
