@@ -1,62 +1,68 @@
-# 724eczane.com — Proje Bağlamı (Claude Code için)
+# domain-hunter deposu — Proje Bağlamı (Claude Code için)
 
-## Bu depo nedir?
+## ⚠️ KRİTİK: Bu depoda 2 farklı site var
 
-Bu depo **724eczane.com** projesine aittir.
-Türkiye'nin 81 ilindeki nöbetçi eczaneleri listeleyen bir Node.js/Express web uygulamasıdır.
+Bu tek depo (`domain-hunter`) iki ayrı siteye hizmet eder.
+**Hiçbir zaman branch'leri ve projeleri karıştırma.**
 
-## KRİTİK: main branch Production'dır
+---
 
-- `main` branch **Railway PaaS** üzerinde production'a deploy edilir.
-- `main` branch'i **asla temizleme, silme veya sıfırlama**.
-- Yeni projeler için bu depoya dokunma; ayrı bir depo oluştur.
-- `main` branch'e doğrudan `git push` çalışmaz (HTTP 403). Değişiklikler `mcp__github__push_files` ile push edilir.
+## Proje Haritası
 
-## Branch yapısı
+| Railway Projesi | Site | Repo | Branch |
+|-----------------|------|------|--------|
+| `modest-alignment` | **724eczane.com** | domain-hunter | `eczane-site` |
+| `harmonious-bravery` | **kuponluk.com** | domain-hunter | `create-coupon-marketplace-uw3yz` |
 
-| Branch | Amaç |
-|--------|------|
-| `main` | Production — Railway buradan deploy eder |
-| `claude/api-724eczane-kMic3` | Aktif geliştirme branch'i |
+---
 
-## Proje yapısı
+## 724eczane.com
 
+- **Railway:** `modest-alignment`
+- **Branch:** `eczane-site`
+- **Geliştirme branch'i:** `claude/api-724eczane-kMic3`
+- Türkiye'nin 81 ilindeki nöbetçi eczaneleri listeleyen Node.js/Express uygulaması
+- NosyAPI üzerinden eczane verisi çekilir
+- **NOSYAPI_KEY** asla koda yazılmaz; Railway environment variable olarak saklanır
+- Her `res.render()` çağrısına `iller: require('./data/iller')` geçilmeli (navbar.ejs kullanır)
+
+### Dosya yapısı
 ```
-server.js          # Express uygulaması — tüm route'lar burada
+server.js
 package.json
 railway.toml
-data/
-  iller.js         # 81 il + ilçe verisi (module.exports)
-public/
-  css/style.css
-  js/app.js
-  robots.txt
-  favicon.svg
-views/
-  home.ejs
-  il.ejs
-  ilce.ejs
-  widget.ejs
-  eczane-ekle.ejs
-  sitene-ekle.ejs
-  iletisim.ejs
-  gizlilik.ejs
-  kullanim-kosullari.ejs
-  cerez-politikasi.ejs
-  partials/
-    navbar.ejs     # iller değişkenini gerektirir
-    footer.ejs
+data/iller.js          # 81 il + ilçe
+public/css/style.css
+public/js/app.js
+public/robots.txt
+public/favicon.svg
+views/home.ejs
+views/il.ejs
+views/ilce.ejs
+views/widget.ejs
+views/eczane-ekle.ejs
+views/sitene-ekle.ejs
+views/iletisim.ejs
+views/gizlilik.ejs
+views/kullanim-kosullari.ejs
+views/cerez-politikasi.ejs
+views/partials/navbar.ejs
+views/partials/footer.ejs
 ```
 
-## Önemli kurallar
+---
 
-1. **NOSYAPI_KEY** asla koda yazılmaz; Railway environment variable olarak saklanır.
-2. Her `res.render()` çağrısına `iller: require('./data/iller')` geçilmeli — navbar.ejs bunu kullanır.
-3. NosyAPI endpoint: `https://www.nosyapi.com/apiv2/service/pharmacies-on-duty`
-4. Cache, Türkiye saatiyle 09:00 / 12:00 / 15:00 / 17:00 / 19:00'da temizlenir.
-5. IndexNow key: `91cec650afe934b2933b74fc702cc0ba` (public by design, hardcoded güvenlidir).
+## kuponluk.com
 
-## Bu depoya yeni proje ekleme
+- **Railway:** `harmonious-bravery`
+- **Branch:** `create-coupon-marketplace-uw3yz`
+- Kupon marketplace projesi
 
-**Yapma.** Farklı bir proje için yeni bir GitHub deposu aç.
-Bu depo yalnızca 724eczane.com'a aittir.
+---
+
+## Genel Kurallar
+
+1. **Yeni proje eklenirse** yeni bir Railway projesi ve yeni bir branch açılır — mevcut branch'lere dokunulmaz.
+2. **Bir siteye ait değişiklikler** yalnızca o sitenin branch'ine push edilir.
+3. **main branch** sadece ortak dokuman (bu dosya gibi) için kullanılır; hiçbir sitenin production kodu main'den deploy edilmez.
+4. Railway'e doğrudan `git push` çalışmaz (HTTP 403); değişiklikler `mcp__github__push_files` ile push edilir.
